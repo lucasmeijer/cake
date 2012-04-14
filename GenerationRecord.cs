@@ -4,7 +4,7 @@ using System.IO;
 
 namespace bs
 {
-	internal class GenerationRecord
+	public class GenerationRecord
 	{
 		public string TargetFile { get; private set; }
 		public TargetBuildSettings Settings { get; private set; }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace bs
 {
@@ -7,10 +6,5 @@ namespace bs
 	{
 		public Action<string, TargetBuildSettings> Action;
 		public TargetBuildSettings Settings;
-	}
-
-	public class TargetBuildSettings
-	{
-		public HashSet<string> InputFiles;
 	}
 }

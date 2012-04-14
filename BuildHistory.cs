@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace bs
 {
-	internal class BuildHistory
+	public class BuildHistory
 	{
 		private readonly Dictionary<string, GenerationRecord> _records = new Dictionary<string, GenerationRecord>();
 

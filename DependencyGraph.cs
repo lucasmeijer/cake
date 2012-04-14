@@ -9,7 +9,16 @@ namespace bs
 	{
 		readonly Dictionary<string, TargetBuildInstructions> _graph = new Dictionary<string, TargetBuildInstructions>();
 		public Action<string, TargetBuildInstructions> GenerateCallback = (s, i) => { };
-		private readonly BuildHistory _buildHistory = new BuildHistory();
+		private readonly BuildHistory _buildHistory;
+
+		public DependencyGraph() : this(new BuildHistory())
+		{
+		}
+
+		public DependencyGraph(BuildHistory history)
+		{
+			_buildHistory = history;
+		}
 
 		public void RequestTarget(string targetFile)
 		{
@@ -31,7 +40,10 @@ namespace bs
 
 			if (!File.Exists(targetFile))
 				return true;
-			
+
+			if (!buildSettings.Equals(recordOfLastBuild.Settings))
+				return true;
+
 			if (File.GetLastWriteTimeUtc(targetFile) < recordOfLastBuild.ModificationTimeOfTargetFile())
 				return true;
 

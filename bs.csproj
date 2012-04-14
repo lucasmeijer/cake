@@ -50,9 +50,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TargetBuildInstructions.cs" />
+    <Compile Include="TargetBuildSettings.cs" />
     <Compile Include="Tests\DependencyGraphTests.cs" />
     <Compile Include="DependencyGraph.cs" />
     <Compile Include="MissingDependencyException.cs" />
+    <Compile Include="Tests\DifferentInputFiles.cs" />
     <Compile Include="Tests\SimpleCopyDepGraph.cs" />
     <Compile Include="Tests\TargetWithoutSources.cs" />
   </ItemGroup>
