@@ -24,10 +24,16 @@ namespace bs
 
 		private bool NeedToGenerate(string targetFile, TargetBuildInstructions instructions)
 		{
-			if (!File.Exists(targetFile))
+			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
+
+			if (recordOfLastBuild == null)
 				return true;
 
-			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
+			if (!File.Exists(targetFile))
+				return true;
+			
+			if (File.GetLastWriteTimeUtc(targetFile) < recordOfLastBuild.ModificationTimeOfTargetFile())
+				return true;
 
 			return instructions.SourceFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
 		}

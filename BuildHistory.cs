@@ -14,7 +14,9 @@ namespace bs
 
 		public GenerationRecord FindRecordFor(string targetFile)
 		{
-			return _records[targetFile];
+			GenerationRecord result = null;
+			_records.TryGetValue(targetFile,out result);
+			return result;
 		}
 	}
 }

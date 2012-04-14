@@ -9,17 +9,22 @@ namespace bs.Tests
 {
 	class SimpleCopyDepGraph : DependencyGraphTests
 	{
+		[SetUp]
+		public void Setup()
+		{
+			SetupSimpleCopyDepGraph();
+		}
+		
+
 		[Test]
 		public void ThrowsIfDependencyDoesNotExist()
 		{
-			SetupSimpleCopyDepGraph();
 			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
 		}
 
 		[Test]
 		public void RegeneratesWhenSourceChanges()
 		{
-			SetupSimpleCopyDepGraph();
 			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
 
 			WriteToSourceRunDepGraphAndVerifyTarget("One");
@@ -36,11 +41,22 @@ namespace bs.Tests
 		[Test]
 		public void WillNotRegeneratesWhenSourceDidNotChange()
 		{
-			SetupSimpleCopyDepGraph();
 			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
 
 			WriteToSourceRunDepGraphAndVerifyTarget("One");
 
+			ThrowIfDepgraphGenerates();
+			_depGraph.RequestTarget(defaulttargetFile);
+		}
+
+		[Test]
+		public void WillNotRegeneratesWhenTargetGotManuallyUpdated()
+		{
+			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
+
+			WriteToSourceRunDepGraphAndVerifyTarget("One");
+
+			File.WriteAllText(defaulttargetFile, "Three");
 			ThrowIfDepgraphGenerates();
 			_depGraph.RequestTarget(defaulttargetFile);
 		}

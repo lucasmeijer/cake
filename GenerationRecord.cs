@@ -32,5 +32,10 @@ namespace bs
 		{
 			return _modificationDates[file];
 		}
+
+		public DateTime ModificationTimeOfTargetFile()
+		{
+			return ModificationTimeOf(TargetFile);
+		}
 	}
 }

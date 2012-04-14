@@ -1,65 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 
 namespace bs.Tests
 {
 	class TargetWithoutSources : DependencyGraphTests
 	{
+		[SetUp]
+		public void Setup()
+		{
+			SetupGraphWithOneTargetWithoutSources();
+		}
+
 		[Test]
 		public void WillGenerateTargetWithoutSources()
 		{
-			DependencyGraph depGraph = SetupGraphWithOneTargetWithoutSources();
-
-			depGraph.RequestTarget(defaulttargetFile);
+			_depGraph.RequestTarget(defaulttargetFile);
 			FileAssert.Contains(defaulttargetFile, "Hello");
 		}
 
 		[Test]
 		public void WontGenerateTargetWithoutSourcesTwice()
 		{
-			DependencyGraph depGraph = SetupGraphWithOneTargetWithoutSources();
-
-			depGraph.RequestTarget(defaulttargetFile);
+			_depGraph.RequestTarget(defaulttargetFile);
 			FileAssert.Contains(defaulttargetFile, "Hello");
 			ThrowIfDepgraphGenerates();
-			depGraph.RequestTarget(defaulttargetFile);
+			_depGraph.RequestTarget(defaulttargetFile);
 		}
 
-		private static DependencyGraph SetupGraphWithOneTargetWithoutSources()
+		[Test]
+		public void WillGenerateTargetIfItWasNeverBuiltBefore()
 		{
-			var depGraph = new DependencyGraph();
-			depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
+			File.WriteAllText(defaulttargetFile, "One");
+			_depGraph.RequestTarget(defaulttargetFile);
+			FileAssert.Contains(defaulttargetFile, "Hello");
+		}
+
+		private void SetupGraphWithOneTargetWithoutSources()
+		{
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
 			                                           	{
 			                                           		Action = (target,sources) => File.WriteAllText(target, "Hello"),
 			                                           		SourceFiles = new string[0],
 			                                           	});
-			return depGraph;
-		}
-
-		[Test]
-		public void ThrowsIfDependencyDoesNotExist()
-		{
-			DependencyGraph depGraph = SetupSimpleCopyDepGraph();
-			Assert.Throws<MissingDependencyException>(() => depGraph.RequestTarget(defaulttargetFile));
-		}
-
-		[Test]
-		public void RegeneratesWhenSourceChanges()
-		{
-			DependencyGraph depGraph = SetupSimpleCopyDepGraph();
-			Assert.Throws<MissingDependencyException>(() => depGraph.RequestTarget(defaulttargetFile));
-
-			File.WriteAllText(defaultSourceFile, "One");
-			depGraph.RequestTarget(defaulttargetFile);
-			FileAssert.Contains(defaultSourceFile, "One");
-			
-			File.WriteAllText(defaultSourceFile, "Two");
-			depGraph.RequestTarget(defaulttargetFile);
-			FileAssert.Contains(defaultSourceFile, "Two");
 		}
 
 		private static DependencyGraph SetupSimpleCopyDepGraph()
