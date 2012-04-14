@@ -5,11 +5,10 @@ namespace cake
 {
 	public class TargetGenerateSettings
 	{
-		public ITargetGeneratingAction Action;
+		public ITargetGeneratingAction Action { get; private set; }
+		public string ActionHash { get; private set; }
 		public HashSet<string> InputFiles { get; private set; }
 		public HashSet<string> OutputFiles { get; private set; }
-
-		private string _actionHash;
 		
 		public TargetGenerateSettings(ITargetGeneratingAction action, IEnumerable<string> inputFiles, string outputFile)
 			: this(action,inputFiles, new[] {outputFile})
@@ -20,7 +19,7 @@ namespace cake
 		{
 			OutputFiles = new HashSet<string>(outputFiles);
 			Action = action;
-			_actionHash = action.GetActionHash();
+			ActionHash = Action.GetActionHash();
 			InputFiles = new HashSet<string>(inputFiles);
 		}
 
@@ -38,16 +37,6 @@ namespace cake
 				return false;
 			
 			return other.InputFiles.SetEquals(InputFiles);
-		}
-
-		public string ActionHash
-		{
-			get
-			{
-				if (Action != null)
-					return Action.GetActionHash();
-				return _actionHash;
-			}
 		}
 
 		public override int GetHashCode()
