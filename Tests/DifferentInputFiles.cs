@@ -38,8 +38,7 @@ namespace bs.Tests
 			var targetBuildInstructions = new TargetGenerateInstructions();
 			
 			targetBuildInstructions.Action = action;
-			targetBuildInstructions.Settings = new TargetGenerateSettings();
-			targetBuildInstructions.Settings.InputFiles = new HashSet<string>(inputFiles);
+			targetBuildInstructions.Settings = new TargetGenerateSettings(new HashSet<string>(inputFiles), action.GetActionHash());
 			return targetBuildInstructions;
 		}
 	}

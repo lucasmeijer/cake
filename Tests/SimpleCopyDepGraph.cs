@@ -67,7 +67,7 @@ namespace bs.Tests
 			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions()
 			                                           	{
 			                                           		Action = action,
-			                                           		Settings = new TargetGenerateSettings() { InputFiles = new HashSet<string>(new[]{defaultSourceFile})}
+			                                           		Settings = new TargetGenerateSettings(new HashSet<string>(new[]{defaultSourceFile}), action.GetActionHash())
 			                                           	});
 		}
 	}

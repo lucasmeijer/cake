@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace bs.Tests
 {
+	[TestFixture]
 	class TargetWithoutSources : DependencyGraphTests
 	{
 		[SetUp]
@@ -40,7 +41,18 @@ namespace bs.Tests
 		[Test]
 		public void RegenerateWhenActionHashChanges()
 		{
+			_depGraph.RequestTarget(defaulttargetFile);
+			_depGraph = new DependencyGraph(_buildHistory);
 
+			bool invoked = false;
+			var action = new SimpleAction((t, s) => { invoked=true; }, "hash2");
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions()
+			{
+				Action = action,
+				Settings = new TargetGenerateSettings(new HashSet<string>(), action.GetActionHash())
+			});
+			_depGraph.RequestTarget(defaulttargetFile);
+			Assert.IsTrue(invoked);
 		}
 
 		
@@ -53,7 +65,7 @@ namespace bs.Tests
 			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions()
 			                                           	{
 			                                           		Action = simpleAction,
-			                                           		Settings = new TargetGenerateSettings() { InputFiles = new HashSet<string>()}
+			                                           		Settings = new TargetGenerateSettings(new HashSet<string>(),simpleAction.GetActionHash())
 			                                           	});
 		}
 
