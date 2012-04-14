@@ -2,7 +2,7 @@
 
 namespace bs
 {
-	public class TargetBuildSettings
+	public class TargetGenerateSettings
 	{
 		public HashSet<string> InputFiles;
 
@@ -10,7 +10,7 @@ namespace bs
 		public override bool Equals(object obj)
 		{
 			if (obj == null) return false;
-			var other = obj as TargetBuildSettings;
+			var other = obj as TargetGenerateSettings;
 			if (other == null) return false;
 			return other.InputFiles.Equals(InputFiles);
 		}

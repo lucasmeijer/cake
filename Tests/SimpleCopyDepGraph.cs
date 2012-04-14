@@ -63,10 +63,11 @@ namespace bs.Tests
 
 		private void SetupSimpleCopyDepGraph()
 		{
-			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
+			var action = new SimpleAction((target, settings) => File.Copy(settings.InputFiles.Single(), target, true), "hash");
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions()
 			                                           	{
-			                                           		Action = (target,settings) => File.Copy(settings.InputFiles.Single(), target, true),
-			                                           		Settings = new TargetBuildSettings() { InputFiles = new HashSet<string>(new[]{defaultSourceFile})}
+			                                           		Action = action,
+			                                           		Settings = new TargetGenerateSettings() { InputFiles = new HashSet<string>(new[]{defaultSourceFile})}
 			                                           	});
 		}
 	}

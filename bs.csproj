@@ -50,8 +50,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecursiveIncludeScanner.cs" />
-    <Compile Include="TargetBuildInstructions.cs" />
-    <Compile Include="TargetBuildSettings.cs" />
+    <Compile Include="TargetGenerateInstructions.cs" />
+    <Compile Include="TargetGenerateSettings.cs" />
     <Compile Include="CCompilerTask.cs" />
     <Compile Include="Tests\CCompilerTests.cs" />
     <Compile Include="Tests\DependencyGraphTests.cs" />
@@ -60,7 +60,9 @@
     <Compile Include="Tests\DifferentInputFiles.cs" />
     <Compile Include="IncludeScanner.cs" />
     <Compile Include="Tests\IncludeScannerTest.cs" />
+    <Compile Include="Tests\SimpleAction.cs" />
     <Compile Include="Tests\SimpleCopyDepGraph.cs" />
+    <Compile Include="ITargetGeneratingAction.cs" />
     <Compile Include="Tests\TargetWithoutSources.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

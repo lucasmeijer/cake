@@ -7,8 +7,8 @@ namespace bs
 {
 	public class DependencyGraph
 	{
-		readonly Dictionary<string, TargetBuildInstructions> _graph = new Dictionary<string, TargetBuildInstructions>();
-		public Action<string, TargetBuildInstructions> GenerateCallback = (s, i) => { };
+		readonly Dictionary<string, TargetGenerateInstructions> _graph = new Dictionary<string, TargetGenerateInstructions>();
+		public Action<string, TargetGenerateInstructions> GenerateCallback = (s, i) => { };
 		private readonly BuildHistory _buildHistory;
 
 		public DependencyGraph() : this(new BuildHistory())
@@ -31,7 +31,7 @@ namespace bs
 				Generate(targetFile, instructions);
 		}
 
-		private bool NeedToGenerate(string targetFile, TargetBuildSettings buildSettings)
+		private bool NeedToGenerate(string targetFile, TargetGenerateSettings generateSettings)
 		{
 			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
 
@@ -41,25 +41,25 @@ namespace bs
 			if (!File.Exists(targetFile))
 				return true;
 
-			if (!buildSettings.Equals(recordOfLastBuild.Settings))
+			if (!generateSettings.Equals(recordOfLastBuild.Settings))
 				return true;
 
 			if (File.GetLastWriteTimeUtc(targetFile) < recordOfLastBuild.ModificationTimeOfTargetFile())
 				return true;
 
-			return buildSettings.InputFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
+			return generateSettings.InputFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
 		}
 
-		private void Generate(string targetFile, TargetBuildInstructions instructions)
+		private void Generate(string targetFile, TargetGenerateInstructions instructions)
 		{
 			GenerateCallback(targetFile, instructions);
-			instructions.Action(targetFile, instructions.Settings);
+			instructions.Action.Invoke(targetFile, instructions.Settings);
 
-			var record = new GenerationRecord(targetFile, instructions.Settings);
+			var record = new GenerationRecord(targetFile, instructions.Settings, "");
 			_buildHistory.AddRecord(record);
 		}
 
-		public void RegisterTarget(string targetFile, TargetBuildInstructions instructions)
+		public void RegisterTarget(string targetFile, TargetGenerateInstructions instructions)
 		{
 			_graph.Add(targetFile,instructions);
 		}

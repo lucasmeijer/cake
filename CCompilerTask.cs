@@ -23,9 +23,5 @@ namespace bs
 			foreach (var file in scanner.GetFilesIncludedBy(_sourceFile))
 				yield return file;
 		}
-
-		
-
-		
 	}
 }

@@ -37,12 +37,23 @@ namespace bs.Tests
 			FileAssert.Contains(defaulttargetFile, "Hello");
 		}
 
+		[Test]
+		public void RegenerateWhenActionHashChanges()
+		{
+
+		}
+
+		
+		
+
 		private void SetupGraphWithOneTargetWithoutSources()
 		{
-			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
+			var simpleAction = new SimpleAction((t,s) => File.WriteAllText(t, "Hello"), "hash1");
+			
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions()
 			                                           	{
-			                                           		Action = (target,sources) => File.WriteAllText(target, "Hello"),
-			                                           		Settings = new TargetBuildSettings() { InputFiles = new HashSet<string>()}
+			                                           		Action = simpleAction,
+			                                           		Settings = new TargetGenerateSettings() { InputFiles = new HashSet<string>()}
 			                                           	});
 		}
 

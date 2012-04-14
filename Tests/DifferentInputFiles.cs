@@ -14,11 +14,11 @@ namespace bs.Tests
 		public void WhenInputFilesChangeTargetGetsRebuilt()
 		{
 			int invocationCount = 0;
-			Action<string, TargetBuildSettings> action = (t, s) =>
-			{
-				File.WriteAllText(t, "Hello");
-				invocationCount++;
-			};
+			var action = new SimpleAction((t,s) =>
+			                              	{
+			                              		File.WriteAllText(t, "Hello");
+			                              		invocationCount++;
+			                              	}, "hash");
 
 			File.WriteAllText("file1", "one");
 			File.WriteAllText("file2", "two");
@@ -33,12 +33,12 @@ namespace bs.Tests
 			Assert.AreEqual(2, invocationCount);
 		}
 
-		private static TargetBuildInstructions MakeInstructions(Action<string, TargetBuildSettings> action, params string[] inputFiles)
+		private static TargetGenerateInstructions MakeInstructions(ITargetGeneratingAction action, params string[] inputFiles)
 		{
-			var targetBuildInstructions = new TargetBuildInstructions();
+			var targetBuildInstructions = new TargetGenerateInstructions();
 			
 			targetBuildInstructions.Action = action;
-			targetBuildInstructions.Settings = new TargetBuildSettings();
+			targetBuildInstructions.Settings = new TargetGenerateSettings();
 			targetBuildInstructions.Settings.InputFiles = new HashSet<string>(inputFiles);
 			return targetBuildInstructions;
 		}

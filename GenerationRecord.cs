@@ -7,12 +7,14 @@ namespace bs
 	public class GenerationRecord
 	{
 		public string TargetFile { get; private set; }
-		public TargetBuildSettings Settings { get; private set; }
+		public TargetGenerateSettings Settings { get; private set; }
+		public string ActionHash { get; private set; }
 
 		private readonly Dictionary<string, DateTime> _modificationDates = new Dictionary<string, DateTime>();
 
-		public GenerationRecord(string targetFile, TargetBuildSettings settings)
+		public GenerationRecord(string targetFile, TargetGenerateSettings settings, string actionHash)
 		{
+			ActionHash = actionHash;
 			TargetFile = targetFile;
 			Settings = settings;
 
