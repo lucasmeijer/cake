@@ -1,8 +1,5 @@
 ﻿using System.IO;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
-using System.Collections.Generic;
 
 namespace bs.Tests
 {
@@ -10,13 +7,15 @@ namespace bs.Tests
 	public class CCompilerTests
 	{
 		[Test]
-		public void Test()
+		public void GetInputFilesFindsRecursiveHeaderDependencies()
 		{
-			File.WriteAllText("test.c", "void main() {}");
-			var task = new CCompilerTask("test.o", "test.c");
+			File.WriteAllText("test.c", "#include <test.h>\nvoid main() {}");
+			File.WriteAllText("test.h", "#include <shared.h>");
+			File.WriteAllText("shared.h", "//like a boss");
+			var task = new CCompilerTask("test.o", "test.c", new[] {""});
 			var inputfiles = task.GetInputFiles();
 
-			CollectionAssert.AreEquivalent(new List<string> {"test.c"}, inputfiles);
+			CollectionAssert.AreEquivalent(new [] {"test.c","test.h","shared.h"}, inputfiles);
 		}
 	}
 }

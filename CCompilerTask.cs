@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using bs.Tests;
 
 namespace bs
@@ -8,37 +7,25 @@ namespace bs
 	{
 		private readonly string _targetFile;
 		private readonly string _sourceFile;
+		private readonly string[] _includePaths;
 
-		public CCompilerTask(string targetFile, string sourceFile)
+		public CCompilerTask(string targetFile, string sourceFile, string[] includePaths)
 		{
 			_targetFile = targetFile;
 			_sourceFile = sourceFile;
+			_includePaths = includePaths;
 		}
 
 		public IEnumerable<string> GetInputFiles()
 		{
+			var scanner = new RecursiveIncludeScanner(_includePaths, new IncludeScanner());
 			yield return _sourceFile;
-			foreach (var file in GetFilesIncludedBy(_sourceFile))
+			foreach (var file in scanner.GetFilesIncludedBy(_sourceFile))
 				yield return file;
 		}
 
-		private static IEnumerable<string> GetFilesIncludedBy(string file)
-		{
-			var includeScanner = new IncludeScanner();
-			foreach(var includedFile in includeScanner.Scan(file))
-			{
-				var foundIncludeFile = FindSpecifiedIncludeFileInSearchDirs(includedFile);
-				if (foundIncludeFile == null)
-					throw new InvalidOperationException("unable to find the header file: "+includedFile+" in the header search paths.");
-				yield return foundIncludeFile;
-				foreach (var file2 in GetFilesIncludedBy(foundIncludeFile))
-					yield return file2;
-			}
-		}
+		
 
-		private static string FindSpecifiedIncludeFileInSearchDirs(string includedFile)
-		{
-			return includedFile;
-		}
+		
 	}
 }

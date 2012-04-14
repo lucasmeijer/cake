@@ -49,6 +49,7 @@
     <Compile Include="GenerationRecord.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursiveIncludeScanner.cs" />
     <Compile Include="TargetBuildInstructions.cs" />
     <Compile Include="TargetBuildSettings.cs" />
     <Compile Include="CCompilerTask.cs" />

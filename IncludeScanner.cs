@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace bs
 {
-	internal class IncludeScanner
+	public class IncludeScanner
 	{
-		Regex _regex = new Regex("^[ 	]*#[ 	]*include[ 	]*[<\"]([^\">]*)[\">].*$", RegexOptions.Multiline);
+		static readonly Regex _regex = new Regex("^[ 	]*#[ 	]*include[ 	]*[<\"]([^\">]*)[\">].*$", RegexOptions.Multiline);
 
 		public IEnumerable<string> Scan(string file)
 		{
-			yield break;
+			return ScanText(File.ReadAllText(file));
 		}
 
 		public IEnumerable<string> ScanText(string fileContents)
