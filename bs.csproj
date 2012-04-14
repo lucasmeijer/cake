@@ -58,6 +58,7 @@
     <Compile Include="MissingDependencyException.cs" />
     <Compile Include="Tests\DifferentInputFiles.cs" />
     <Compile Include="IncludeScanner.cs" />
+    <Compile Include="Tests\IncludeScannerTest.cs" />
     <Compile Include="Tests\SimpleCopyDepGraph.cs" />
     <Compile Include="Tests\TargetWithoutSources.cs" />
   </ItemGroup>
