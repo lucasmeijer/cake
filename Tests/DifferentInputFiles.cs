@@ -35,11 +35,7 @@ namespace cake.Tests
 
 		private static TargetGenerateInstructions MakeInstructions(ITargetGeneratingAction action, params string[] inputFiles)
 		{
-			var targetBuildInstructions = new TargetGenerateInstructions();
-			
-			targetBuildInstructions.Action = action;
-			targetBuildInstructions.Settings = new TargetGenerateSettings(new HashSet<string>(inputFiles), action.GetActionHash());
-			return targetBuildInstructions;
+			return new TargetGenerateInstructions(action, new HashSet<string>(inputFiles));
 		}
 	}
 }

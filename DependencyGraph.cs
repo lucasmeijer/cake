@@ -24,14 +24,14 @@ namespace cake
 		{
 			var instructions = _graph[targetFile];
 
-			if (instructions.Settings.InputFiles.Any(inputFile => !File.Exists(inputFile)))
+			if (instructions.InputFiles.Any(inputFile => !File.Exists(inputFile)))
 				throw new MissingDependencyException();
 
-			if (NeedToGenerate(targetFile, instructions.Settings))
+			if (NeedToGenerate(targetFile, instructions))
 				Generate(targetFile, instructions);
 		}
 
-		private bool NeedToGenerate(string targetFile, TargetGenerateSettings generateSettings)
+		private bool NeedToGenerate(string targetFile, TargetGenerateInstructions generateSettings)
 		{
 			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
 
@@ -53,9 +53,9 @@ namespace cake
 		private void Generate(string targetFile, TargetGenerateInstructions instructions)
 		{
 			GenerateCallback(targetFile, instructions);
-			instructions.Action.Invoke(targetFile, instructions.Settings);
+			instructions.Action.Invoke(targetFile, instructions);
 
-			var record = new GenerationRecord(targetFile, instructions.Settings, "");
+			var record = new GenerationRecord(targetFile, instructions, "");
 			_buildHistory.AddRecord(record);
 		}
 

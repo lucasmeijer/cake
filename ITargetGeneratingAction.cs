@@ -2,7 +2,7 @@
 {
 	public interface ITargetGeneratingAction
 	{
-		void Invoke(string target, TargetGenerateSettings instructions);
+		void Invoke(string target, TargetGenerateInstructions instructions);
 		string GetActionHash();
 	}
 }
