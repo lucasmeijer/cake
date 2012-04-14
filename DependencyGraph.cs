@@ -7,37 +7,43 @@ namespace bs
 {
 	public class DependencyGraph
 	{
-		readonly Dictionary<string, TargetBuildInstructions> graph = new Dictionary<string, TargetBuildInstructions>();
+		readonly Dictionary<string, TargetBuildInstructions> _graph = new Dictionary<string, TargetBuildInstructions>();
 		public Action<string, TargetBuildInstructions> GenerateCallback = (s, i) => { };
+		private readonly BuildHistory _buildHistory = new BuildHistory();
 
 		public void RequestTarget(string targetFile)
 		{
-			var instructions = graph[targetFile];
-			
+			var instructions = _graph[targetFile];
+
 			if (instructions.SourceFiles.Any(sourceFile => !File.Exists(sourceFile)))
 				throw new MissingDependencyException();
 
-			if (File.Exists(targetFile))
-				return;
+			if (NeedToGenerate(targetFile, instructions))
+				Generate(targetFile, instructions);
+		}
 
-			Generate(targetFile, instructions);
+		private bool NeedToGenerate(string targetFile, TargetBuildInstructions instructions)
+		{
+			if (!File.Exists(targetFile))
+				return true;
+
+			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
+
+			return instructions.SourceFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
 		}
 
 		private void Generate(string targetFile, TargetBuildInstructions instructions)
 		{
 			GenerateCallback(targetFile, instructions);
 			instructions.Action(targetFile, instructions.SourceFiles);
+
+			var record = new GenerationRecord(targetFile, instructions.SourceFiles);
+			_buildHistory.AddRecord(record);
 		}
 
 		public void RegisterTarget(string targetFile, TargetBuildInstructions instructions)
 		{
-			graph.Add(targetFile,instructions);
+			_graph.Add(targetFile,instructions);
 		}
-	}
-
-	public class TargetBuildInstructions
-	{
-		public Action<string, IEnumerable<string>> Action;
-		public IEnumerable<string> SourceFiles;
 	}
 }
