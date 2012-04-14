@@ -64,7 +64,7 @@ namespace cake.Tests
 		private void SetupSimpleCopyDepGraph()
 		{
 			var action = new SimpleAction((target, settings) => File.Copy(settings.InputFiles.Single(), target, true), "hash");
-			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions(action, new HashSet<string>(new[] {defaultSourceFile})));
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateSettings(action, new[] {defaultSourceFile}));
 
 		}
 	}

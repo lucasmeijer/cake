@@ -46,24 +46,17 @@ namespace cake.Tests
 
 			bool invoked = false;
 			var action = new SimpleAction((t, s) => { invoked=true; }, "hash2");
-			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions(action, new HashSet<string>()));
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateSettings(action, new string[0]));
 			
 			_depGraph.RequestTarget(defaulttargetFile);
 			Assert.IsTrue(invoked);
 		}
 
-		
-		
-
 		private void SetupGraphWithOneTargetWithoutSources()
 		{
 			var simpleAction = new SimpleAction((t,s) => File.WriteAllText(t, "Hello"), "hash1");
-
-			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateInstructions(simpleAction, new HashSet<string>()));
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateSettings(simpleAction, new string[0]));
 		}
-
-
-
 		
 	}
 }

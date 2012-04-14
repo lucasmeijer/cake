@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace cake
 {
-	public class TargetGenerateInstructions
+	public class TargetGenerateSettings
 	{
 		public ITargetGeneratingAction Action;
 		public HashSet<string> InputFiles { get; private set; }
 
 		private string _actionHash;
 		
-		public TargetGenerateInstructions(ITargetGeneratingAction action, HashSet<string> inputFiles)
+		public TargetGenerateSettings(ITargetGeneratingAction action, IEnumerable<string> inputFiles)
 		{
 			Action = action;
 			_actionHash = action.GetActionHash();
-			InputFiles = inputFiles;
+			InputFiles = new HashSet<string>(inputFiles);
 		}
 
 		//todo: figure out how to write a sane Equals
@@ -23,7 +23,7 @@ namespace cake
 			if (obj == null)
 				return false;
 
-			var other = obj as TargetGenerateInstructions;
+			var other = obj as TargetGenerateSettings;
 			if (other == null) 
 				return false;
 
@@ -47,8 +47,5 @@ namespace cake
 		{
 			return (InputFiles != null ? InputFiles.GetHashCode() : 0);
 		}
-
-
-
 	}
 }

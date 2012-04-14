@@ -4,18 +4,18 @@ namespace cake.Tests
 {
 	class SimpleAction : ITargetGeneratingAction
 	{
-		private readonly Action<string, TargetGenerateInstructions> _invoke;
+		private readonly Action<string, TargetGenerateSettings> _invoke;
 		private readonly string _actionHash;
 
-		public SimpleAction(Action<string, TargetGenerateInstructions> invoke, string actionHash)
+		public SimpleAction(Action<string, TargetGenerateSettings> invoke, string actionHash)
 		{
 			_invoke = invoke;
 			_actionHash = actionHash;
 		}
 
-		public void Invoke(string target, TargetGenerateInstructions instructions)
+		public void Invoke(string target, TargetGenerateSettings settings)
 		{
-			_invoke(target, instructions);
+			_invoke(target, settings);
 		}
 
 		public string GetActionHash()

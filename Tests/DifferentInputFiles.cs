@@ -33,9 +33,9 @@ namespace cake.Tests
 			Assert.AreEqual(2, invocationCount);
 		}
 
-		private static TargetGenerateInstructions MakeInstructions(ITargetGeneratingAction action, params string[] inputFiles)
+		private static TargetGenerateSettings MakeInstructions(ITargetGeneratingAction action, params string[] inputFiles)
 		{
-			return new TargetGenerateInstructions(action, new HashSet<string>(inputFiles));
+			return new TargetGenerateSettings(action, inputFiles);
 		}
 	}
 }

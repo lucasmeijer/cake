@@ -7,8 +7,8 @@ namespace cake
 {
 	public class DependencyGraph
 	{
-		readonly Dictionary<string, TargetGenerateInstructions> _graph = new Dictionary<string, TargetGenerateInstructions>();
-		public Action<string, TargetGenerateInstructions> GenerateCallback = (s, i) => { };
+		readonly Dictionary<string, TargetGenerateSettings> _graph = new Dictionary<string, TargetGenerateSettings>();
+		public Action<string, TargetGenerateSettings> GenerateCallback = (s, i) => { };
 		private readonly BuildHistory _buildHistory;
 
 		public DependencyGraph() : this(new BuildHistory())
@@ -31,7 +31,7 @@ namespace cake
 				Generate(targetFile, instructions);
 		}
 
-		private bool NeedToGenerate(string targetFile, TargetGenerateInstructions generateSettings)
+		private bool NeedToGenerate(string targetFile, TargetGenerateSettings generateSettings)
 		{
 			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
 
@@ -50,18 +50,18 @@ namespace cake
 			return generateSettings.InputFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
 		}
 
-		private void Generate(string targetFile, TargetGenerateInstructions instructions)
+		private void Generate(string targetFile, TargetGenerateSettings settings)
 		{
-			GenerateCallback(targetFile, instructions);
-			instructions.Action.Invoke(targetFile, instructions);
+			GenerateCallback(targetFile, settings);
+			settings.Action.Invoke(targetFile, settings);
 
-			var record = new GenerationRecord(targetFile, instructions, "");
+			var record = new GenerationRecord(targetFile, settings);
 			_buildHistory.AddRecord(record);
 		}
 
-		public void RegisterTarget(string targetFile, TargetGenerateInstructions instructions)
+		public void RegisterTarget(string targetFile, TargetGenerateSettings settings)
 		{
-			_graph.Add(targetFile,instructions);
+			_graph.Add(targetFile,settings);
 		}
 	}
 }
