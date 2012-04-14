@@ -45,7 +45,7 @@ namespace cake.Tests
 			_depGraph = new DependencyGraph(_buildHistory);
 
 			bool invoked = false;
-			var action = new SimpleAction((t, s) => { invoked=true; }, "hash2");
+			var action = new SimpleAction(a => { invoked=true; }, "hash2");
 			_depGraph.RegisterTarget(new TargetGenerateSettings(action, new string[0], defaulttargetFile));
 			
 			_depGraph.RequestTarget(defaulttargetFile);
@@ -54,7 +54,7 @@ namespace cake.Tests
 
 		private void SetupGraphWithOneTargetWithoutSources()
 		{
-			var simpleAction = new SimpleAction((t,s) => File.WriteAllText(t, "Hello"), "hash1");
+			var simpleAction = new SimpleAction(s => File.WriteAllText(s.OutputFiles.Single(), "Hello"), "hash1");
 			_depGraph.RegisterTarget(new TargetGenerateSettings(simpleAction, new string[0], defaulttargetFile));
 		}
 		

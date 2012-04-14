@@ -14,9 +14,9 @@ namespace cake.Tests
 		public void WhenInputFilesChangeTargetGetsRebuilt()
 		{
 			int invocationCount = 0;
-			var action = new SimpleAction((t,s) =>
+			var action = new SimpleAction(s =>
 			                              	{
-			                              		File.WriteAllText(t, "Hello");
+			                              		File.WriteAllText(s.OutputFiles.Single(), "Hello");
 			                              		invocationCount++;
 			                              	}, "hash");
 

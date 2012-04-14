@@ -53,7 +53,7 @@ namespace cake
 		private void Generate(string targetFile, TargetGenerateSettings settings)
 		{
 			GenerateCallback(targetFile, settings);
-			settings.Action.Invoke(targetFile, settings);
+			settings.Action.Invoke(settings);
 
 			var record = new GenerationRecord(targetFile, settings);
 			_buildHistory.AddRecord(record);
