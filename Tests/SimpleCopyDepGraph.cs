@@ -15,7 +15,6 @@ namespace cake.Tests
 			SetupSimpleCopyDepGraph();
 		}
 		
-
 		[Test]
 		public void ThrowsIfDependencyDoesNotExist()
 		{
@@ -64,8 +63,7 @@ namespace cake.Tests
 		private void SetupSimpleCopyDepGraph()
 		{
 			var action = new SimpleAction((target, settings) => File.Copy(settings.InputFiles.Single(), target, true), "hash");
-			_depGraph.RegisterTarget(defaulttargetFile, new TargetGenerateSettings(action, new[] {defaultSourceFile}));
-
+			_depGraph.RegisterTarget(new TargetGenerateSettings(action, new[] {defaultSourceFile}, defaulttargetFile));
 		}
 	}
 }

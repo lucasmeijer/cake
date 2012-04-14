@@ -7,11 +7,18 @@ namespace cake
 	{
 		public ITargetGeneratingAction Action;
 		public HashSet<string> InputFiles { get; private set; }
+		public HashSet<string> OutputFiles { get; private set; }
 
 		private string _actionHash;
 		
-		public TargetGenerateSettings(ITargetGeneratingAction action, IEnumerable<string> inputFiles)
+		public TargetGenerateSettings(ITargetGeneratingAction action, IEnumerable<string> inputFiles, string outputFile)
+			: this(action,inputFiles, new[] {outputFile})
 		{
+		}
+
+		public TargetGenerateSettings(ITargetGeneratingAction action, IEnumerable<string> inputFiles, IEnumerable<string> outputFiles)
+		{
+			OutputFiles = new HashSet<string>(outputFiles);
 			Action = action;
 			_actionHash = action.GetActionHash();
 			InputFiles = new HashSet<string>(inputFiles);

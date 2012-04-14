@@ -59,9 +59,10 @@ namespace cake
 			_buildHistory.AddRecord(record);
 		}
 
-		public void RegisterTarget(string targetFile, TargetGenerateSettings settings)
+		public void RegisterTarget(TargetGenerateSettings settings)
 		{
-			_graph.Add(targetFile,settings);
+			foreach(var targetFile in settings.OutputFiles)
+				_graph.Add(targetFile,settings);
 		}
 	}
 }
