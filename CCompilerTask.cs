@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using bs.Tests;
+using cake.Tests;
 
-namespace bs
+namespace cake
 {
 	public class CCompilerTask
 	{

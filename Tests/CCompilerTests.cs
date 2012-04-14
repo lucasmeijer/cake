@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using NUnit.Framework;
 
-namespace bs.Tests
+namespace cake.Tests
 {
 	[TestFixture]
 	public class CCompilerTests

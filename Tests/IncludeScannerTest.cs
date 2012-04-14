@@ -2,7 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 
-namespace bs.Tests
+namespace cake.Tests
 {
 	[TestFixture]
 	public class IncludeScannerTest

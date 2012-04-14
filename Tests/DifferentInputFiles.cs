@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace bs.Tests
+namespace cake.Tests
 {
 	[TestFixture]
 	class DifferentInputFiles : DependencyGraphTests

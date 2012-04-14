@@ -1,4 +1,4 @@
-﻿namespace bs
+﻿namespace cake
 {
 	public interface ITargetGeneratingAction
 	{

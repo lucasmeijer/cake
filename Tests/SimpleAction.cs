@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace bs.Tests
+namespace cake.Tests
 {
 	class SimpleAction : ITargetGeneratingAction
 	{

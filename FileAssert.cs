@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace bs
+namespace cake
 {
 	static class FileAssert
 	{

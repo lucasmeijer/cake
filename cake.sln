@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bs", "bs.csproj", "{F2546F61-0181-4E7D-AD26-5F20F9D2F888}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cake", "cake.csproj", "{F2546F61-0181-4E7D-AD26-5F20F9D2F888}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

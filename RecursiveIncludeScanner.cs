@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace bs
+namespace cake
 {
 	public class RecursiveIncludeScanner
 	{

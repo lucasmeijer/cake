@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace bs
+namespace cake
 {
 	public class MissingDependencyException : Exception
 	{

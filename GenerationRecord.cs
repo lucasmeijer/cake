@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace bs
+namespace cake
 {
 	public class GenerationRecord
 	{
