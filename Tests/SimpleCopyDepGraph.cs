@@ -12,35 +12,46 @@ namespace bs.Tests
 		[Test]
 		public void ThrowsIfDependencyDoesNotExist()
 		{
-			DependencyGraph depGraph = SetupSimpleCopyDepGraph();
-			Assert.Throws<MissingDependencyException>(() => depGraph.RequestTarget(defaulttargetFile));
+			SetupSimpleCopyDepGraph();
+			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
 		}
 
 		[Test]
 		public void RegeneratesWhenSourceChanges()
 		{
-			DependencyGraph depGraph = SetupSimpleCopyDepGraph();
-			Assert.Throws<MissingDependencyException>(() => depGraph.RequestTarget(defaulttargetFile));
+			SetupSimpleCopyDepGraph();
+			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
 
-			File.WriteAllText(defaultSourceFile, "One");
-			depGraph.RequestTarget(defaulttargetFile);
-			FileAssert.Contains(defaulttargetFile, "One");
-			
-			File.WriteAllText(defaultSourceFile, "Two");
-			depGraph.RequestTarget(defaulttargetFile);
-			FileAssert.Contains(defaulttargetFile, "Two");
+			WriteToSourceRunDepGraphAndVerifyTarget("One");
+			WriteToSourceRunDepGraphAndVerifyTarget("Two");
 		}
 
-		private static DependencyGraph SetupSimpleCopyDepGraph()
+		private void WriteToSourceRunDepGraphAndVerifyTarget(string contents)
 		{
-			var depGraph = new DependencyGraph();
+			File.WriteAllText(defaultSourceFile, contents);
+			_depGraph.RequestTarget(defaulttargetFile);
+			FileAssert.Contains(defaulttargetFile, contents);
+		}
 
-			depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
+		[Test]
+		public void WillNotRegeneratesWhenSourceDidNotChange()
+		{
+			SetupSimpleCopyDepGraph();
+			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
+
+			WriteToSourceRunDepGraphAndVerifyTarget("One");
+
+			ThrowIfDepgraphGenerates();
+			_depGraph.RequestTarget(defaulttargetFile);
+		}
+
+		private void SetupSimpleCopyDepGraph()
+		{
+			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
 			                                           	{
 			                                           		Action = (target,sources) => File.Copy(sources.Single(), target, true),
 			                                           		SourceFiles = new[] { defaultSourceFile }
 			                                           	});
-			return depGraph;
 		}
 	}
 }

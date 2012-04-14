@@ -25,7 +25,7 @@ namespace bs.Tests
 
 			depGraph.RequestTarget(defaulttargetFile);
 			FileAssert.Contains(defaulttargetFile, "Hello");
-			depGraph.GenerateCallback += (target, instructions) => { throw new InvalidOperationException(); };
+			ThrowIfDepgraphGenerates();
 			depGraph.RequestTarget(defaulttargetFile);
 		}
 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using NUnit.Framework;
 
 namespace bs.Tests
@@ -15,9 +16,18 @@ namespace bs.Tests
 			
 			Directory.CreateDirectory(dirName);
 			Directory.SetCurrentDirectory(dirName);
+
+			_depGraph = new DependencyGraph();
 		}
 
 		protected const string defaultSourceFile = "input.txt";
 		protected const string defaulttargetFile = "output.txt";
+
+		protected DependencyGraph _depGraph;
+
+		protected void ThrowIfDepgraphGenerates()
+		{
+			_depGraph.GenerateCallback += (target, instructions) => { throw new InvalidOperationException(); };
+		}
 	}
 }
