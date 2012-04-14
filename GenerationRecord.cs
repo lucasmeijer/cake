@@ -7,18 +7,18 @@ namespace bs
 	internal class GenerationRecord
 	{
 		public string TargetFile { get; private set; }
-		public IEnumerable<string> SourceFiles { get; private set; }
+		public TargetBuildSettings Settings { get; private set; }
 
 		private readonly Dictionary<string, DateTime> _modificationDates = new Dictionary<string, DateTime>();
 
-		public GenerationRecord(string targetFile, IEnumerable<string> sourceFiles)
+		public GenerationRecord(string targetFile, TargetBuildSettings settings)
 		{
 			TargetFile = targetFile;
-			SourceFiles = sourceFiles;
+			Settings = settings;
 
 			RecordModificationDate(targetFile);
-			foreach (var sourceFile in sourceFiles)
-				RecordModificationDate(sourceFile);
+			foreach (var inputFile in settings.InputFiles)
+				RecordModificationDate(inputFile);
 		}
 
 		private void RecordModificationDate(string file)

@@ -41,20 +41,9 @@ namespace bs.Tests
 			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
 			                                           	{
 			                                           		Action = (target,sources) => File.WriteAllText(target, "Hello"),
-			                                           		SourceFiles = new string[0],
+			                                           		Settings = new TargetBuildSettings() { InputFiles = new string[0]}
 			                                           	});
 		}
 
-		private static DependencyGraph SetupSimpleCopyDepGraph()
-		{
-			var depGraph = new DependencyGraph();
-
-			depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
-			                                           	{
-			                                           		Action = (target,sources) => File.Copy(sources.Single(), target, true),
-			                                           		SourceFiles = new[] { defaultSourceFile }
-			                                           	});
-			return depGraph;
-		}
 	}
 }

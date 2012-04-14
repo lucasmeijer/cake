@@ -65,8 +65,8 @@ namespace bs.Tests
 		{
 			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
 			                                           	{
-			                                           		Action = (target,sources) => File.Copy(sources.Single(), target, true),
-			                                           		SourceFiles = new[] { defaultSourceFile }
+			                                           		Action = (target,settings) => File.Copy(settings.InputFiles.Single(), target, true),
+			                                           		Settings = new TargetBuildSettings() { InputFiles = new[] { defaultSourceFile }}
 			                                           	});
 		}
 	}

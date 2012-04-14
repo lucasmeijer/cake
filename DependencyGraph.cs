@@ -15,14 +15,14 @@ namespace bs
 		{
 			var instructions = _graph[targetFile];
 
-			if (instructions.SourceFiles.Any(sourceFile => !File.Exists(sourceFile)))
+			if (instructions.Settings.InputFiles.Any(inputFile => !File.Exists(inputFile)))
 				throw new MissingDependencyException();
 
-			if (NeedToGenerate(targetFile, instructions))
+			if (NeedToGenerate(targetFile, instructions.Settings))
 				Generate(targetFile, instructions);
 		}
 
-		private bool NeedToGenerate(string targetFile, TargetBuildInstructions instructions)
+		private bool NeedToGenerate(string targetFile, TargetBuildSettings buildSettings)
 		{
 			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
 
@@ -35,15 +35,15 @@ namespace bs
 			if (File.GetLastWriteTimeUtc(targetFile) < recordOfLastBuild.ModificationTimeOfTargetFile())
 				return true;
 
-			return instructions.SourceFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
+			return buildSettings.InputFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
 		}
 
 		private void Generate(string targetFile, TargetBuildInstructions instructions)
 		{
 			GenerateCallback(targetFile, instructions);
-			instructions.Action(targetFile, instructions.SourceFiles);
+			instructions.Action(targetFile, instructions.Settings);
 
-			var record = new GenerationRecord(targetFile, instructions.SourceFiles);
+			var record = new GenerationRecord(targetFile, instructions.Settings);
 			_buildHistory.AddRecord(record);
 		}
 

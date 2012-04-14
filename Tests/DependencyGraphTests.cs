@@ -29,5 +29,6 @@ namespace bs.Tests
 		{
 			_depGraph.GenerateCallback += (target, instructions) => { throw new InvalidOperationException(); };
 		}
+
 	}
 }
