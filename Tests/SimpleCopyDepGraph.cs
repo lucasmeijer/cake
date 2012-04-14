@@ -10,7 +10,7 @@ namespace bs.Tests
 	class SimpleCopyDepGraph : DependencyGraphTests
 	{
 		[SetUp]
-		public void Setup()
+		public new void Setup()
 		{
 			SetupSimpleCopyDepGraph();
 		}
@@ -66,7 +66,7 @@ namespace bs.Tests
 			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
 			                                           	{
 			                                           		Action = (target,settings) => File.Copy(settings.InputFiles.Single(), target, true),
-			                                           		Settings = new TargetBuildSettings() { InputFiles = new[] { defaultSourceFile }}
+			                                           		Settings = new TargetBuildSettings() { InputFiles = new HashSet<string>(new[]{defaultSourceFile})}
 			                                           	});
 		}
 	}

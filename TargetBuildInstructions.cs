@@ -11,6 +11,6 @@ namespace bs
 
 	public class TargetBuildSettings
 	{
-		public IEnumerable<string> InputFiles;
+		public HashSet<string> InputFiles;
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NUnit.Framework;
 
@@ -7,7 +8,7 @@ namespace bs.Tests
 	class TargetWithoutSources : DependencyGraphTests
 	{
 		[SetUp]
-		public void Setup()
+		public new void Setup()
 		{
 			SetupGraphWithOneTargetWithoutSources();
 		}
@@ -41,7 +42,7 @@ namespace bs.Tests
 			_depGraph.RegisterTarget(defaulttargetFile, new TargetBuildInstructions()
 			                                           	{
 			                                           		Action = (target,sources) => File.WriteAllText(target, "Hello"),
-			                                           		Settings = new TargetBuildSettings() { InputFiles = new string[0]}
+			                                           		Settings = new TargetBuildSettings() { InputFiles = new HashSet<string>()}
 			                                           	});
 		}
 
