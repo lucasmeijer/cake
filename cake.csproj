@@ -8,8 +8,8 @@
     <ProjectGuid>{F2546F61-0181-4E7D-AD26-5F20F9D2F888}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>bs</RootNamespace>
-    <AssemblyName>bs</AssemblyName>
+    <RootNamespace>cake</RootNamespace>
+    <AssemblyName>cake</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -64,6 +64,7 @@
     <Compile Include="GenerationReason.cs" />
     <Compile Include="ActionScheduler.cs" />
     <Compile Include="Tests\ActionSchedulerTest.cs" />
+    <Compile Include="Tests\BenchMark.cs" />
     <Compile Include="Tests\CCompilerTests.cs" />
     <Compile Include="Tests\DependencyGraphTests.cs" />
     <Compile Include="DependencyGraph.cs" />

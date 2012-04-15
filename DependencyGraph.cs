@@ -41,7 +41,6 @@ namespace cake
 				actionScheduler.JobFinished(job);
 			}
 		}
-
 		
 		private void Generate(TargetGenerateSettings settings)
 		{
