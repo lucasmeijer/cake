@@ -24,8 +24,6 @@ namespace cake.Tests
 		[Test]
 		public void RegeneratesWhenSourceChanges()
 		{
-			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
-
 			WriteToSourceRunDepGraphAndVerifyTarget("One");
 			WriteToSourceRunDepGraphAndVerifyTarget("Two");
 		}
@@ -40,8 +38,6 @@ namespace cake.Tests
 		[Test]
 		public void WillNotRegeneratesWhenSourceDidNotChange()
 		{
-			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
-
 			WriteToSourceRunDepGraphAndVerifyTarget("One");
 
 			ThrowIfDepgraphGenerates();
@@ -51,8 +47,6 @@ namespace cake.Tests
 		[Test]
 		public void WillNotRegeneratesWhenTargetGotManuallyUpdated()
 		{
-			Assert.Throws<MissingDependencyException>(() => _depGraph.RequestTarget(defaulttargetFile));
-
 			WriteToSourceRunDepGraphAndVerifyTarget("One");
 
 			File.WriteAllText(defaulttargetFile, "Three");

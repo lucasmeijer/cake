@@ -22,17 +22,44 @@ namespace cake
 
 		public void RequestTarget(string targetFile)
 		{
-			var instructions = _graph[targetFile];
+			var actionScheduler = new ActionScheduler();
+			
+			var action = ActionRequiredToGetTargetUpdated(targetFile);
+			if (action == null)
+				return;
 
-			if (instructions.InputFiles.Any(inputFile => !File.Exists(inputFile)))
-				throw new MissingDependencyException();
+			actionScheduler.Add(action);
 
-			if (NeedToGenerate(targetFile, instructions))
-				Generate(instructions);
+			var job = actionScheduler.FindJobToRun();
+			
+			Generate(job);
 		}
 
-		private bool NeedToGenerate(string targetFile, TargetGenerateSettings generateSettings)
+		SchedulableAction ActionRequiredToGetTargetUpdated(string target)
 		{
+			TargetGenerateSettings generateSettings;
+			if (!_graph.TryGetValue(target, out generateSettings))
+			{
+				if (File.Exists(target))
+					return null;
+				throw new MissingDependencyException();
+			}
+
+			var inputFilesRequiringGeneration = generateSettings.InputFiles.Where(inputfile => ActionRequiredToGetTargetUpdated(inputfile) != null);
+
+			if (inputFilesRequiringGeneration.Any())
+				return new SchedulableAction(generateSettings, inputFilesRequiringGeneration);
+
+			if (NeedToGenerate(target))
+				return new SchedulableAction(generateSettings);
+
+			return null;
+		}
+
+		private bool NeedToGenerate(string targetFile)
+		{
+			TargetGenerateSettings generateSettings = _graph[targetFile];
+
 			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
 
 			if (recordOfLastBuild == null)
@@ -47,7 +74,10 @@ namespace cake
 			if (File.GetLastWriteTimeUtc(targetFile) < recordOfLastBuild.ModificationTimeOfTargetFile())
 				return true;
 
-			return generateSettings.InputFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
+			if (generateSettings.InputFiles.Any(inputFile => File.GetLastWriteTimeUtc(inputFile) > recordOfLastBuild.ModificationTimeOf(inputFile)))
+				return true;
+
+			return false;
 		}
 
 		private void Generate(TargetGenerateSettings settings)

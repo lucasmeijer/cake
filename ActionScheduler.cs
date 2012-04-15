@@ -8,9 +8,9 @@ namespace cake
 	{
 		private readonly Dictionary<TargetGenerateSettings, HashSet<string>> _scheduledActions = new Dictionary<TargetGenerateSettings, HashSet<string>>();
 
-		public void Add(IEnumerable<string> dependenciesRequiringRegeneration, TargetGenerateSettings tgs)
+		public void Add(SchedulableAction schedulableAction)
 		{
-			_scheduledActions.Add(tgs, new HashSet<string>(dependenciesRequiringRegeneration));
+			_scheduledActions.Add(schedulableAction.Settings, new HashSet<string>(schedulableAction.InputFilesRequiringGeneration));
 		}
 
 		public TargetGenerateSettings FindJobToRun()

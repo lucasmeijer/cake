@@ -24,7 +24,7 @@ namespace cake.Tests
 		public void SingleActionWithoutDependenciesRequiringGenerationCanBeRun()
 		{
 			var tgs = new TargetGenerateSettings(_action, new[] {"input"}, "output");
-			_scheduler.Add(new string[0], tgs);
+			_scheduler.Add(new SchedulableAction(tgs));
 
 			Assert.AreEqual(tgs,_scheduler.FindJobToRun());
 		}
@@ -33,7 +33,7 @@ namespace cake.Tests
 		public void DoesNotProvideSameJobTwice()
 		{
 			var tgs = new TargetGenerateSettings(_action, new[] { "input" }, "output");
-			_scheduler.Add(new string[0], tgs);
+			_scheduler.Add(new SchedulableAction(tgs));
 
 			Assert.AreEqual(tgs, _scheduler.FindJobToRun());
 			Assert.IsNull(_scheduler.FindJobToRun());
@@ -43,7 +43,7 @@ namespace cake.Tests
 		public void SingleActionWithDependenciesRequiringGenerationCannotBeRun()
 		{
 			var tgs = new TargetGenerateSettings(_action, new[] { "input" }, "output");
-			_scheduler.Add(new[]{"input"}, tgs);
+			_scheduler.Add(new SchedulableAction(tgs,new[] { "input"}));
 
 			Assert.IsNull(_scheduler.FindJobToRun());
 		}
@@ -52,7 +52,7 @@ namespace cake.Tests
 		public void ActionWithDependenciesRequiringGenerationCanBeRanWhenDependencyIsGenerated()
 		{
 			var tgs = new TargetGenerateSettings(_action, new[] { "input" }, "output");
-			_scheduler.Add(new[] { "input" }, tgs);
+			_scheduler.Add(new SchedulableAction(tgs, new[] { "input" }));
 
 			Assert.IsNull(_scheduler.FindJobToRun());
 

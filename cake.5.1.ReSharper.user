@@ -1,0 +1,206 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <CompletionStatisticsManager>
+    <ItemStatistics item="Default">
+      <Item value="action" priority="10" />
+      <Item value="if" priority="7" />
+      <Item value="Action" priority="1" />
+      <Item value="return" priority="9" />
+      <Item value="else" priority="1" />
+      <Item value="new" priority="31" />
+      <Item value="HashSet&lt;string&gt;" priority="3" />
+      <Item value="inputFiles" priority="1" />
+      <Item value="simpleAction" priority="0" />
+      <Item value="_actionHash" priority="0" />
+      <Item value="IEnumerable" priority="5" />
+      <Item value="string" priority="7" />
+      <Item value="defaulttargetFile" priority="2" />
+      <Item value="foreach" priority="6" />
+      <Item value="var" priority="22" />
+      <Item value="in" priority="4" />
+      <Item value="settings" priority="9" />
+      <Item value="this" priority="3" />
+      <Item value="outputFile" priority="1" />
+      <Item value="ActionHash" priority="0" />
+      <Item value="s" priority="2" />
+      <Item value="TestAttribute`0" priority="0" />
+      <Item value="public" priority="5" />
+      <Item value="void" priority="3" />
+      <Item value="TargetGenerateSettings`0" priority="7" />
+      <Item value="SimpleAction`0" priority="1" />
+      <Item value="FileAssert" priority="0" />
+      <Item value="CCompilerTask`0" priority="0" />
+      <Item value="File`0" priority="2" />
+      <Item value="_depGraph" priority="2" />
+      <Item value="compilecppfile" priority="0" />
+      <Item value="DependencyGraph`0" priority="1" />
+      <Item value="depGraph" priority="0" />
+      <Item value="TargetGenerateSettings" priority="0" />
+      <Item value="GetInputFiles`0" priority="0" />
+      <Item value="FileAssert`0" priority="0" />
+      <Item value="_sourceFile" priority="0" />
+      <Item value="_targetFile" priority="0" />
+      <Item value="ActionSchedulerTest`0" priority="0" />
+      <Item value="scheduler" priority="2" />
+      <Item value="IgnoreAttribute`0" priority="1" />
+      <Item value="Assert`0" priority="2" />
+      <Item value="tgs" priority="2" />
+      <Item value="jobToRun" priority="0" />
+      <Item value="List" priority="4" />
+      <Item value="Dictionary&lt;TargetGenerateSettings,List&lt;string&gt;&gt;" priority="0" />
+      <Item value="_scheduledActions" priority="3" />
+      <Item value="KeyValuePair" priority="1" />
+      <Item value="kvp" priority="0" />
+      <Item value="SetUpAttribute`0" priority="0" />
+      <Item value="ActionScheduler" priority="0" />
+      <Item value="SimpleAction" priority="0" />
+      <Item value="findJobToRun" priority="1" />
+      <Item value="_scheduler" priority="1" />
+      <Item value="_action" priority="0" />
+      <Item value="inputGenerator" priority="1" />
+      <Item value="deps" priority="0" />
+      <Item value="HashSet" priority="0" />
+      <Item value="ActionScheduler`0" priority="0" />
+      <Item value="_graph" priority="2" />
+      <Item value="target" priority="3" />
+      <Item value="jobs" priority="2" />
+      <Item value="GetJobsRequiredToGenerateTarget`0" priority="0" />
+      <Item value="jobsToGenerateInputFile" priority="0" />
+      <Item value="Count`1" priority="0" />
+      <Item value="Any`1" priority="0" />
+      <Item value="String`0" priority="1" />
+      <Item value="inputFile" priority="0" />
+      <Item value="bool" priority="0" />
+      <Item value="JobsRequiredToGetTargetUpdated`0" priority="0" />
+      <Item value="inputFilesAboutToBecomeRegenerated" priority="4" />
+      <Item value="yield return" priority="0" />
+      <Item value="System" priority="0" />
+      <Item value="Tuple`0" priority="0" />
+      <Item value="Tuple&lt;TargetGenerateSettings,IEnumerable&lt;string&gt;&gt;" priority="0" />
+      <Item value="SchedulableAction`0" priority="1" />
+      <Item value="SchedulableAction" priority="1" />
+      <Item value="generateSettings" priority="4" />
+      <Item value="Settings" priority="0" />
+      <Item value="NeedToGenerate`0" priority="0" />
+      <Item value="null" priority="1" />
+      <Item value="false" priority="0" />
+      <Item value="schedulableAction" priority="3" />
+      <Item value="actionScheduler" priority="2" />
+      <Item value="ActionRequiredToGetTargetUpdated`0" priority="0" />
+      <Item value="targetFile" priority="0" />
+      <Item value="throw" priority="0" />
+      <Item value="MissingDependencyException" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:cake.ITargetGeneratingAction">
+      <Item value="GetActionHash`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:cake.TargetGenerateSettings">
+      <Item value="OutputFiles" priority="6" />
+      <Item value="InputFiles" priority="2" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.HashSet`1">
+      <Item value="Single`1" priority="3" />
+      <Item value="Where`1" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@System.IO.File">
+      <Item value="WriteAllText`0" priority="1" />
+      <Item value="Exists`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:cake.DependencyGraph">
+      <Item value="RegisterTarget`0" priority="1" />
+      <Item value="RequestTarget`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:@NUnit.Framework.Assert">
+      <Item value="AreEqual`0" priority="1" />
+      <Item value="IsNull`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.Dictionary`2">
+      <Item value="Add`0" priority="0" />
+      <Item value="Remove`0" priority="0" />
+      <Item value="TryGetValue`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.List`1">
+      <Item value="Count" priority="1" />
+      <Item value="Remove`0" priority="0" />
+      <Item value="AddRange`0" priority="0" />
+      <Item value="Add`0" priority="1" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.IEnumerable`1">
+      <Item value="FirstOrDefault`1" priority="0" />
+      <Item value="ToArray`1" priority="0" />
+      <Item value="Any`1" priority="1" />
+      <Item value="Concat`1" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:System.Collections.Generic.KeyValuePair`2">
+      <Item value="Key" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:cake.ActionScheduler">
+      <Item value="FindJobToRun`0" priority="1" />
+      <Item value="Add`0" priority="0" />
+    </ItemStatistics>
+    <ItemStatistics item="Qualified:cake.SchedulableAction">
+      <Item value="Settings" priority="0" />
+      <Item value="InputFilesRequiringGeneration" priority="0" />
+    </ItemStatistics>
+  </CompletionStatisticsManager>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="d:Miscellaneous Files/f:Microsoft.Common.targets/l:C!?Windows?Microsoft.NET?Framework?v4.0.30319?Microsoft.Common.targets" caret="66787" fromTop="23" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:SimpleAction.cs" caret="493" fromTop="22" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:SchedulableAction.cs" caret="323" fromTop="12" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:ActionScheduler.cs" caret="973" fromTop="30" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:ActionSchedulerTest.cs" caret="673" fromTop="18" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1759" fromTop="17" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:FileAssert.cs" caret="162" fromTop="9" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:SimpleCopyDepGraph.cs" caret="816" fromTop="14" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:ActionScheduler.cs" caret="672" fromTop="16" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:ActionSchedulerTest.cs" caret="1765" fromTop="28" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:ActionSchedulerTest.cs" caret="1671" fromTop="28" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:ActionScheduler.cs" caret="955" fromTop="25" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:ActionScheduler.cs" caret="461" fromTop="9" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1647" fromTop="20" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1506" fromTop="10" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1506" fromTop="17" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1506" fromTop="27" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1506" fromTop="26" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1506" fromTop="18" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1517" fromTop="0" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="2527" fromTop="29" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="2527" fromTop="18" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="2527" fromTop="24" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="2527" fromTop="5" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="2044" fromTop="26" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1410" fromTop="15" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:ActionSchedulerTest.cs" caret="859" fromTop="16" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:ActionScheduler.cs" caret="176" fromTop="8" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:ActionScheduler.cs" caret="310" fromTop="10" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:ActionSchedulerTest.cs" caret="1204" fromTop="10" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:ActionSchedulerTest.cs" caret="1515" fromTop="19" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:ActionSchedulerTest.cs" caret="614" fromTop="15" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="844" fromTop="18" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="639" fromTop="9" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/f:DependencyGraph.cs" caret="1131" fromTop="17" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:SimpleCopyDepGraph.cs" caret="947" fromTop="13" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:SimpleCopyDepGraph.cs" caret="1167" fromTop="13" />
+      <File id="F2546F61-0181-4E7D-AD26-5F20F9D2F888/d:Tests/f:SimpleCopyDepGraph.cs" caret="527" fromTop="6" />
+    </RecentEdits>
+  </RecentFiles>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerNUnit>
+    <NUnitInstallDir>C:\Program Files (x86)\NUnit 2.5.10\bin\net-2.0\</NUnitInstallDir>
+    <UseAddins>Never</UseAddins>
+  </UnitTestRunnerNUnit>
+</Configuration>
