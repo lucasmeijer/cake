@@ -15,22 +15,22 @@ namespace cake
 			_includeScanner = scanner;
 		}
 
-		public IEnumerable<string> GetFilesIncludedBy(string file, DependencyGraph depGraph)
+		public IEnumerable<string> GetFilesIncludedBy(string file)
 		{
 			foreach (var includedFile in _includeScanner.Scan(file))
 			{
-				var foundIncludeFile = FindSpecifiedIncludeFileInSearchDirs(depGraph,includedFile);
+				var foundIncludeFile = FindSpecifiedIncludeFileInSearchDirs(includedFile);
 				if (foundIncludeFile == null)
 					throw new InvalidOperationException("unable to find the header file: " + includedFile + " in the header search paths.");
 				yield return foundIncludeFile;
 				if (!File.Exists(foundIncludeFile))
 					continue;
-				foreach (var file2 in GetFilesIncludedBy(foundIncludeFile, depGraph))
+				foreach (var file2 in GetFilesIncludedBy(foundIncludeFile))
 					yield return file2;
 			}
 		}
 
-		private string FindSpecifiedIncludeFileInSearchDirs(DependencyGraph depGraph, string includedFile)
+		private string FindSpecifiedIncludeFileInSearchDirs(string includedFile)
 		{
 			return includedFile;
 		}
