@@ -30,7 +30,7 @@ namespace cake.Tests
 
 		protected void ThrowIfDepgraphGenerates()
 		{
-			_depGraph.GenerateCallback += (target, instructions) => { throw new InvalidOperationException(); };
+			_depGraph.GenerateCallback += settings => { throw new InvalidOperationException(); };
 		}
 
 

@@ -8,7 +8,7 @@ namespace cake
 	public class DependencyGraph
 	{
 		readonly Dictionary<string, TargetGenerateSettings> _graph = new Dictionary<string, TargetGenerateSettings>();
-		public Action<string, TargetGenerateSettings> GenerateCallback = (s, i) => { };
+		public Action<TargetGenerateSettings> GenerateCallback = s => { };
 		private readonly BuildHistory _buildHistory;
 
 		public DependencyGraph() : this(new BuildHistory())
@@ -28,7 +28,7 @@ namespace cake
 				throw new MissingDependencyException();
 
 			if (NeedToGenerate(targetFile, instructions))
-				Generate(targetFile, instructions);
+				Generate(instructions);
 		}
 
 		private bool NeedToGenerate(string targetFile, TargetGenerateSettings generateSettings)
@@ -50,13 +50,16 @@ namespace cake
 			return generateSettings.InputFiles.Any(sourceFile => recordOfLastBuild.ModificationTimeOf(sourceFile) != File.GetLastWriteTimeUtc(sourceFile));
 		}
 
-		private void Generate(string targetFile, TargetGenerateSettings settings)
+		private void Generate(TargetGenerateSettings settings)
 		{
-			GenerateCallback(targetFile, settings);
+			GenerateCallback(settings);
 			settings.Action.Invoke(settings);
 
-			var record = new GenerationRecord(targetFile, settings);
-			_buildHistory.AddRecord(record);
+			foreach (var outputFile in settings.OutputFiles)
+			{
+				var record = new GenerationRecord(outputFile, settings);
+				_buildHistory.AddRecord(record);
+			}
 		}
 
 		public void RegisterTarget(TargetGenerateSettings settings)

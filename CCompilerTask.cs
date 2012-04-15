@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using cake.Tests;
 
 namespace cake
@@ -22,6 +24,19 @@ namespace cake
 			yield return _sourceFile;
 			foreach (var file in scanner.GetFilesIncludedBy(_sourceFile))
 				yield return file;
+		}
+
+		public void RegisterWithDepGraph(DependencyGraph depGraph)
+		{
+			var action = new SimpleAction(Execute, "todo");
+			var settings = new TargetGenerateSettings(action, GetInputFiles(), _targetFile);
+			depGraph.RegisterTarget(settings);
+		}
+
+		public void Execute(TargetGenerateSettings settings)
+		{
+			//todo
+			File.Copy(_sourceFile, _targetFile, true);
 		}
 	}
 }

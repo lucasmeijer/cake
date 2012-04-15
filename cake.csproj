@@ -11,7 +11,8 @@
     <RootNamespace>bs</RootNamespace>
     <AssemblyName>bs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -34,7 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>libs\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,17 +59,24 @@
     <Compile Include="RecursiveIncludeScanner.cs" />
     <Compile Include="TargetGenerateSettings.cs" />
     <Compile Include="CCompilerTask.cs" />
+    <Compile Include="GenerationReason.cs" />
+    <Compile Include="ActionScheduler.cs" />
+    <Compile Include="Tests\ActionSchedulerTest.cs" />
     <Compile Include="Tests\CCompilerTests.cs" />
     <Compile Include="Tests\DependencyGraphTests.cs" />
     <Compile Include="DependencyGraph.cs" />
     <Compile Include="MissingDependencyException.cs" />
     <Compile Include="Tests\DifferentInputFiles.cs" />
     <Compile Include="IncludeScanner.cs" />
+    <Compile Include="Tests\GeneratedHeader.cs" />
     <Compile Include="Tests\IncludeScannerTest.cs" />
     <Compile Include="Tests\SimpleAction.cs" />
     <Compile Include="Tests\SimpleCopyDepGraph.cs" />
     <Compile Include="ITargetGeneratingAction.cs" />
     <Compile Include="Tests\TargetWithoutSources.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

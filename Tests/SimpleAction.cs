@@ -7,6 +7,11 @@ namespace cake.Tests
 		private readonly Action<TargetGenerateSettings> _invoke;
 		private readonly string _actionHash;
 
+		public SimpleAction(Action<TargetGenerateSettings> invoke)
+			: this(invoke,"defaulthash")
+		{
+		}
+
 		public SimpleAction(Action<TargetGenerateSettings> invoke, string actionHash)
 		{
 			_invoke = invoke;
