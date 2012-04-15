@@ -18,22 +18,24 @@ namespace cake
 			_scanFileForIncludes = scanFileForIncludes;
 		}
 
-		public IEnumerable<string> GetFilesIncludedBy(string file)
+		public List<string> GetFilesIncludedBy(string file)
 		{
+			var results = new List<string>();
+
 			foreach (var includedFile in _scanFileForIncludes(file))
 			{
 				var foundIncludeFile = FindSpecifiedIncludeFileInSearchDirs(file,includedFile);
 				if (foundIncludeFile == null)
 					throw new MissingHeaderException(file, includedFile);
-				yield return foundIncludeFile;
+				results.Add(foundIncludeFile);
 				
 				//this can happen if we found the right includefile in the depgraph, but it hasn't been generated yet.
 				if (!File.Exists(foundIncludeFile))
 					continue;
 
-				foreach (var file2 in GetFilesIncludedBy(foundIncludeFile))
-					yield return file2;
+				results.AddRange(GetFilesIncludedBy(foundIncludeFile));
 			}
+			return results;
 		}
 
 		private string FindSpecifiedIncludeFileInSearchDirs(string includingFile, string includedFile)

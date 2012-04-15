@@ -32,7 +32,7 @@ namespace cake.Tests
 			WillFileBeGeneratedAtPath willFileBeGeneratedAtPath = file => false;
 			var ris = new RecursiveIncludeScanner(new string[0], willFileBeGeneratedAtPath, ScanFileMock);
 			
-			Assert.Throws<MissingHeaderException>(()=>ris.GetFilesIncludedBy("test.c").ToArray());
+			Assert.Throws<MissingHeaderException>(()=>ris.GetFilesIncludedBy("test.c"));
 		}
 
 		private static IEnumerable<string> ScanFileMock(string file)
