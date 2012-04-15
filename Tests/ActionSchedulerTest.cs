@@ -48,5 +48,19 @@ namespace cake.Tests
 			Assert.IsNull(_scheduler.FindJobToRun());
 		}
 
+		[Test]
+		public void ActionWithDependenciesRequiringGenerationCanBeRanWhenDependencyIsGenerated()
+		{
+			var tgs = new TargetGenerateSettings(_action, new[] { "input" }, "output");
+			_scheduler.Add(new[] { "input" }, tgs);
+
+			Assert.IsNull(_scheduler.FindJobToRun());
+
+			var inputGenerator = new TargetGenerateSettings(_action, new string[0], "input");
+			_scheduler.JobFinished(inputGenerator);
+
+			Assert.AreEqual(tgs,_scheduler.FindJobToRun());
+		}
+
 	}
 }
