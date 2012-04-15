@@ -35,11 +35,25 @@ namespace cake.Tests
 			Assert.Throws<MissingHeaderException>(()=>ris.GetFilesIncludedBy("test.c"));
 		}
 
+		[Test]
+		public void CanFindHeaderWithSubDirectorySpecification()
+		{
+			var ris = new RecursiveIncludeScanner(new string[0], file => false, f=>ScanFileMock(f,"sub1/myheader.h"));
+			Directory.CreateDirectory("sub1");
+			File.WriteAllText("sub1/myheader.h", "//boss");
+			var result = ris.GetFilesIncludedBy("test.c");
+			Assert.AreEqual("sub1/myheader.h", result.Single());
+		}
+
 		private static IEnumerable<string> ScanFileMock(string file)
+		{
+			return ScanFileMock(file, "myheader.h");
+		}
+		private static IEnumerable<string> ScanFileMock(string file,string headertofind)
 		{
 			if (file != "test.c")
 				yield break;
-			yield return "myheader.h";
+			yield return headertofind;
 		}
 	}
 }
