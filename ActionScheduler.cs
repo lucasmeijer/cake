@@ -1,18 +1,23 @@
-﻿using System;
-using cake;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-namespace bs
+namespace cake
 {
 	public class ActionScheduler
 	{
-		public void Add(string target, TargetGenerateSettings tgs, string[] dependenciesRequiringRegeneration)
+		private Dictionary<TargetGenerateSettings, List<string>> _scheduledActions = new Dictionary<TargetGenerateSettings, List<string>>();
+
+		public void Add(IEnumerable<string> dependenciesRequiringRegeneration, TargetGenerateSettings tgs)
 		{
-			throw new NotImplementedException();
+			_scheduledActions.Add(tgs, new List<string>(dependenciesRequiringRegeneration));
 		}
 
 		public TargetGenerateSettings FindJobToRun()
 		{
-			throw new NotImplementedException();
+			var findJobToRun = _scheduledActions.Where(kvp => kvp.Value.Count == 0).Select(kvp=>kvp.Key).FirstOrDefault();
+			if (findJobToRun!=null)
+				_scheduledActions.Remove(findJobToRun);
+			return findJobToRun;
 		}
 	}
 }

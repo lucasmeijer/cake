@@ -18,6 +18,10 @@ namespace cake.Tests
 			_actionHash = actionHash;
 		}
 
+		public SimpleAction() : this(s=> { })
+		{
+		}
+
 		public void Invoke(TargetGenerateSettings settings)
 		{
 			_invoke(settings);

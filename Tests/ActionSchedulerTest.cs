@@ -5,23 +5,48 @@ using cake;
 using cake.Tests;
 using NUnit.Framework;
 
-namespace bs.Tests
+namespace cake.Tests
 {
 	[TestFixture]
 	public class ActionSchedulerTest
 	{
-		[Test]
-		[Ignore]
-		public void Test()
+		ActionScheduler _scheduler;
+		private SimpleAction _action;
+
+		[SetUp]
+		public void Setup()
 		{
-			var scheduler = new ActionScheduler();
-
-			var action = new SimpleAction(s => { });
-			var tgs = new TargetGenerateSettings(action, new[] {"input"}, "output");
-			scheduler.Add("output", tgs, new string[0]);
-
-			var jobToRun = scheduler.FindJobToRun();
-
+			_scheduler = new ActionScheduler();
+			_action = new SimpleAction();
 		}
+
+		[Test]
+		public void SingleActionWithoutDependenciesRequiringGenerationCanBeRun()
+		{
+			var tgs = new TargetGenerateSettings(_action, new[] {"input"}, "output");
+			_scheduler.Add(new string[0], tgs);
+
+			Assert.AreEqual(tgs,_scheduler.FindJobToRun());
+		}
+
+		[Test]
+		public void DoesNotProvideSameJobTwice()
+		{
+			var tgs = new TargetGenerateSettings(_action, new[] { "input" }, "output");
+			_scheduler.Add(new string[0], tgs);
+
+			Assert.AreEqual(tgs, _scheduler.FindJobToRun());
+			Assert.IsNull(_scheduler.FindJobToRun());
+		}
+
+		[Test]
+		public void SingleActionWithDependenciesRequiringGenerationCannotBeRun()
+		{
+			var tgs = new TargetGenerateSettings(_action, new[] { "input" }, "output");
+			_scheduler.Add(new[]{"input"}, tgs);
+
+			Assert.IsNull(_scheduler.FindJobToRun());
+		}
+
 	}
 }
