@@ -18,19 +18,22 @@ namespace cake
 		{
 			var result = ActionRequiredToGetTargetUpdated(targetFile);
 			if (result != null)
+			{
 				yield return result;
+				foreach(var inputFileRequiringGeneration in result.InputFilesRequiringGeneration)
+				{
+					var theirAction = ActionRequiredToGetTargetUpdated(inputFileRequiringGeneration);
+					if (theirAction != null)
+						yield return theirAction;
+				}
+			}
 		}
 
 		SchedulableAction ActionRequiredToGetTargetUpdated(string target)
 		{
 			TargetGenerateSettings generateSettings;
 			if (!_dependencyGraph._graph.TryGetValue(target, out generateSettings))
-			{
 				return null;
-				//if (File.Exists(target))
-				//	return null;
-				//throw new MissingDependencyException();
-			}
 
 			var inputFilesRequiringGeneration = generateSettings.InputFiles.Where(inputfile => ActionRequiredToGetTargetUpdated(inputfile) != null).ToArray();
 

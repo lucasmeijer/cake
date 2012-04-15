@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace cake.Tests
 {
-	[TestFixture]
 	public class DependencyGraphTests
 	{
 		[SetUp]
@@ -32,9 +31,5 @@ namespace cake.Tests
 		{
 			_depGraph.GenerateCallback += settings => { throw new InvalidOperationException(); };
 		}
-
-
-
-	
 	}
 }

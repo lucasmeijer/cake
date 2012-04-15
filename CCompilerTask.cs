@@ -18,18 +18,18 @@ namespace cake
 			_includePaths = includePaths;
 		}
 
-		public IEnumerable<string> GetInputFiles()
+		public IEnumerable<string> GetInputFiles(DependencyGraph depGraph)
 		{
 			var scanner = new RecursiveIncludeScanner(_includePaths, new IncludeScanner());
 			yield return _sourceFile;
-			foreach (var file in scanner.GetFilesIncludedBy(_sourceFile))
+			foreach (var file in scanner.GetFilesIncludedBy(_sourceFile, depGraph))
 				yield return file;
 		}
 
 		public void RegisterWithDepGraph(DependencyGraph depGraph)
 		{
 			var action = new SimpleAction(Execute, "todo");
-			var settings = new TargetGenerateSettings(action, GetInputFiles(), _targetFile);
+			var settings = new TargetGenerateSettings(action, GetInputFiles(depGraph), _targetFile);
 			depGraph.RegisterTarget(settings);
 		}
 

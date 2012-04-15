@@ -1,28 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using cake;
-using cake.Tests;
 using NUnit.Framework;
 
-namespace bs.Tests
+namespace cake.Tests
 {
 	[TestFixture]
 	class SchedulableActionCollectorTest
 	{
+		DependencyGraph _depGraph;
+		SchedulableActionCollector _collector;
+
+		[SetUp]
+		public void Setup()
+		{
+			_depGraph = new DependencyGraph();
+			_collector = new SchedulableActionCollector(_depGraph);
+		}
+
 		[Test]
 		public void CanCollectSingleAction()
 		{
-			var depGraph = new DependencyGraph();
-			var a = new SchedulableActionCollector(depGraph);
-
 			var settings = new TargetGenerateSettings(new SimpleAction(s=> { }), new[] {"input"}, "output");
-			depGraph.RegisterTarget(settings);
-			var result = a.CollectActionsToGenerate("output").ToArray();
+			_depGraph.RegisterTarget(settings);
+			var result = _collector.CollectActionsToGenerate("output").ToArray();
 
 			Assert.AreEqual(1, result.Length);
-			Assert.AreEqual(settings,result[0].Settings);
+			Assert.AreEqual(settings, result[0].Settings);
+		}
+
+		[Test]
+		public void CanCollectMultipleActions()
+		{
+			var settings1 = new TargetGenerateSettings(new SimpleAction(s => { }), new[] { "file1" }, "file2");
+			_depGraph.RegisterTarget(settings1);
+
+			var settings2 = new TargetGenerateSettings(new SimpleAction(s => { }), new[] { "file2" }, "file3");
+			_depGraph.RegisterTarget(settings2);
+
+			var result = _collector.CollectActionsToGenerate("file3").ToArray();
+
+			Assert.AreEqual(2, result.Length);
+
+			//HALP! how to do a more reasonable equivalenec test?
+			CollectionAssert.AreEquivalent(result.Select(r=>r.Settings), new[] { settings1,settings2});
+			CollectionAssert.AreEquivalent(result.Select(r => r.InputFilesRequiringGeneration), new[] { new string[0], new[]{"file2"}});
 		}
 	}
 }

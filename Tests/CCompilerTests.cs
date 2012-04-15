@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Moq;
 using NUnit.Framework;
 
 namespace cake.Tests
@@ -13,7 +14,8 @@ namespace cake.Tests
 			File.WriteAllText("test.h", "#include <shared.h>");
 			File.WriteAllText("shared.h", "//like a boss");
 			var task = new CCompilerTask("test.o", "test.c", new[] {""});
-			var inputfiles = task.GetInputFiles();
+			var depGraph = new Mock<DependencyGraph>().Object;
+			var inputfiles = task.GetInputFiles(depGraph);
 
 			CollectionAssert.AreEquivalent(new [] {"test.c","test.h","shared.h"}, inputfiles);
 		}

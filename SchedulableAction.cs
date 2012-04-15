@@ -8,7 +8,7 @@ namespace cake
 		public IEnumerable<string> InputFilesRequiringGeneration;
 
 		public SchedulableAction(TargetGenerateSettings generateSettings)
-			:this(generateSettings,new List<string>())
+			: this(generateSettings, new List<string>())
 		{
 		}
 

@@ -35,8 +35,14 @@ namespace cake
 
 			if (ActionHash != other.ActionHash) 
 				return false;
-			
-			return other.InputFiles.SetEquals(InputFiles);
+
+			if (!other.InputFiles.SetEquals(InputFiles))
+				return false;
+
+			if (!other.OutputFiles.SetEquals(OutputFiles))
+				return false;
+
+			return true;
 		}
 
 		public override int GetHashCode()
