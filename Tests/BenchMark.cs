@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using cake;
-using cake.Tests;
 using NUnit.Framework;
 
 namespace cake.Tests
@@ -13,6 +11,7 @@ namespace cake.Tests
 	class BenchMark
 	{
 		[Test]
+		[Ignore]
 		public void Test()
 		{
 			var depGraph = new DependencyGraph();

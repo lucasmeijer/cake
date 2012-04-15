@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 
 namespace cake
 {
+	public delegate IEnumerable<string> ScanFileForIncludes(string file);
+
 	public class IncludeScanner
 	{
 		static readonly Regex _regex = new Regex("^[ 	]*#[ 	]*include[ 	]*[<\"]([^\">]*)[\">].*$", RegexOptions.Multiline);

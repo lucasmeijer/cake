@@ -20,9 +20,9 @@ namespace cake
 
 		public IEnumerable<string> GetInputFiles(DependencyGraph depGraph)
 		{
-			var scanner = new RecursiveIncludeScanner(_includePaths, new IncludeScanner());
+			var scanner = new RecursiveIncludeScanner(_includePaths, depGraph.IsTargetRegistered,new IncludeScanner().Scan);
 			yield return _sourceFile;
-			foreach (var file in scanner.GetFilesIncludedBy(_sourceFile, depGraph))
+			foreach (var file in scanner.GetFilesIncludedBy(_sourceFile))
 				yield return file;
 		}
 

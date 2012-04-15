@@ -10,12 +10,7 @@ namespace cake.Tests
 		[SetUp]
 		public void Setup()
 		{
-			const string dirName = "Workspace";
-			if (Directory.Exists(dirName))
-				Directory.Delete(dirName,true);
-			
-			Directory.CreateDirectory(dirName);
-			Directory.SetCurrentDirectory(dirName);
+			Tools.SetupCleanCurrentDirectory();
 
 			_buildHistory = new BuildHistory();
 			_depGraph = new DependencyGraph(_buildHistory);

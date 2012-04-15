@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace cake
 {
+	public delegate bool WillFileBeGeneratedAtPath(string path);
+
 	public class DependencyGraph
 	{
 		public readonly Dictionary<string, TargetGenerateSettings> _graph = new Dictionary<string, TargetGenerateSettings>();
@@ -58,6 +60,11 @@ namespace cake
 		{
 			foreach(var targetFile in settings.OutputFiles)
 				_graph.Add(targetFile,settings);
+		}
+
+		public bool IsTargetRegistered(string file)
+		{
+			return _graph.Keys.Contains(file);
 		}
 	}
 }
