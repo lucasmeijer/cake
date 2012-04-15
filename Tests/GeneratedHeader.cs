@@ -19,6 +19,9 @@ namespace cake.Tests
 
 			File.WriteAllText("file1","//theboss");
 			File.WriteAllText("test.c","#include <myheader.h>");
+			
+			//temp:
+			File.WriteAllText("myheader.h","doesalreadyexisttemporary" );
 			var compilecppfile = new CCompilerTask("test.o", "test.c", new string[] {});
 
 			_depGraph.RegisterTarget(generateHeaderSettings);

@@ -7,9 +7,9 @@ namespace cake
 {
 	public class DependencyGraph
 	{
-		readonly Dictionary<string, TargetGenerateSettings> _graph = new Dictionary<string, TargetGenerateSettings>();
+		public readonly Dictionary<string, TargetGenerateSettings> _graph = new Dictionary<string, TargetGenerateSettings>();
 		public Action<TargetGenerateSettings> GenerateCallback = s => { };
-		private readonly BuildHistory _buildHistory;
+		public readonly BuildHistory _buildHistory;
 
 		public DependencyGraph() : this(new BuildHistory())
 		{
@@ -23,63 +23,26 @@ namespace cake
 		public void RequestTarget(string targetFile)
 		{
 			var actionScheduler = new ActionScheduler();
+
+			var c = new SchedulableActionCollector(this);
+			var actions = c.CollectActionsToGenerate(targetFile);
 			
-			var action = ActionRequiredToGetTargetUpdated(targetFile);
-			if (action == null)
-				return;
+			foreach(var action in actions)
+				actionScheduler.Add(action);
 
-			actionScheduler.Add(action);
+			actionScheduler.VerifyAllInputFilesArePresentOrWillBeGenerated();
 
-			var job = actionScheduler.FindJobToRun();
-			
-			Generate(job);
-		}
-
-		SchedulableAction ActionRequiredToGetTargetUpdated(string target)
-		{
-			TargetGenerateSettings generateSettings;
-			if (!_graph.TryGetValue(target, out generateSettings))
+			while (actionScheduler.AnyJobsLeft)
 			{
-				if (File.Exists(target))
-					return null;
-				throw new MissingDependencyException();
+				var job = actionScheduler.FindJobToRun();
+				if (job==null)
+					throw new InvalidOperationException("No job is available to run, while there are still scheduled jobs left.");
+				Generate(job);
+				actionScheduler.JobFinished(job);
 			}
-
-			var inputFilesRequiringGeneration = generateSettings.InputFiles.Where(inputfile => ActionRequiredToGetTargetUpdated(inputfile) != null);
-
-			if (inputFilesRequiringGeneration.Any())
-				return new SchedulableAction(generateSettings, inputFilesRequiringGeneration);
-
-			if (NeedToGenerate(target))
-				return new SchedulableAction(generateSettings);
-
-			return null;
 		}
 
-		private bool NeedToGenerate(string targetFile)
-		{
-			TargetGenerateSettings generateSettings = _graph[targetFile];
-
-			var recordOfLastBuild = _buildHistory.FindRecordFor(targetFile);
-
-			if (recordOfLastBuild == null)
-				return true;
-
-			if (!File.Exists(targetFile))
-				return true;
-
-			if (!generateSettings.Equals(recordOfLastBuild.Settings))
-				return true;
-
-			if (File.GetLastWriteTimeUtc(targetFile) < recordOfLastBuild.ModificationTimeOfTargetFile())
-				return true;
-
-			if (generateSettings.InputFiles.Any(inputFile => File.GetLastWriteTimeUtc(inputFile) > recordOfLastBuild.ModificationTimeOf(inputFile)))
-				return true;
-
-			return false;
-		}
-
+		
 		private void Generate(TargetGenerateSettings settings)
 		{
 			GenerateCallback(settings);

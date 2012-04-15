@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecursiveIncludeScanner.cs" />
     <Compile Include="SchedulableAction.cs" />
+    <Compile Include="SchedulableActionCollector.cs" />
     <Compile Include="TargetGenerateSettings.cs" />
     <Compile Include="CCompilerTask.cs" />
     <Compile Include="GenerationReason.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="IncludeScanner.cs" />
     <Compile Include="Tests\GeneratedHeader.cs" />
     <Compile Include="Tests\IncludeScannerTest.cs" />
+    <Compile Include="Tests\SchedulableActionCollectorTest.cs" />
     <Compile Include="Tests\SimpleAction.cs" />
     <Compile Include="Tests\SimpleCopyDepGraph.cs" />
     <Compile Include="ITargetGeneratingAction.cs" />
