@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildHistory.cs" />
+    <Compile Include="CakePath.cs" />
     <Compile Include="FileAssert.cs" />
     <Compile Include="GenerationRecord.cs" />
     <Compile Include="MissingHeaderException.cs" />
