@@ -55,6 +55,16 @@ namespace cake.Tests
 			Assert.AreEqual("sub1/myheader.h", result.Single());
 		}
 
+		[Test]
+		public void CanFindNotYetCreatedHeaderInIncludePath()
+		{
+			var ris = new RecursiveIncludeScanner(new[] { "sub1" ,"sub2"}, file => file == "sub1/myheader.h", f => ScanFileMock(f, "myheader.h"));
+			Directory.CreateDirectory("sub2");
+			File.WriteAllText("sub2/myheader.h", "//boss");
+			var result = ris.GetFilesIncludedBy("test.c");
+			Assert.AreEqual("sub1/myheader.h", result.Single());
+		}
+
 		private static IEnumerable<string> ScanFileMock(string file)
 		{
 			return ScanFileMock(file, "myheader.h");
