@@ -40,11 +40,13 @@ namespace cake.Tests
 
 			var result = _collector.CollectActionsToGenerate("file3").ToArray();
 
-			Assert.AreEqual(2, result.Length);
-
-			//HALP! how to do a more reasonable equivalenec test?
-			CollectionAssert.AreEquivalent(result.Select(r=>r.Settings), new[] { settings1,settings2});
-			CollectionAssert.AreEquivalent(result.Select(r => r.InputFilesRequiringGeneration), new[] { new string[0], new[]{"file2"}});
+			var expected = new[]
+			               	{
+			               		new SchedulableAction(settings1, new string[0] {}),
+			               		new SchedulableAction(settings2, new string[1] {"file2"})
+			               	};
+			
+			CollectionAssert.AreEquivalent(result,expected);
 		}
 	}
 }
