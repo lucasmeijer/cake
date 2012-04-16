@@ -45,7 +45,7 @@ namespace cake
 
 			foreach(var dir in includeDirs)
 			{
-				var file_in_dir = Path.Combine(dir,Path.GetFileName(includedFile));
+				var file_in_dir = Path.Combine(dir,includedFile);
 				if (File.Exists(file_in_dir))
 					return file_in_dir;
 				if (_willFileBeGeneratedAtPath(file_in_dir))
